@@ -54,7 +54,7 @@ setValidateLink($controller, $validate)
 
 建议在`Provider`中定义验证相关的设置
 ## 取值
-通过`get_validate_data`方法来获取验证后的值，取回的值为[验证器集合](Collection.md)类型
+通过`get_validate_data`方法来获取验证后的值，取回的值为[验证器集合](https://v.neww7.com/3/Collection.html)类型
 ```php
 $data = get_validate_data($request);
 ```
