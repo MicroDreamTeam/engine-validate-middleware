@@ -1,0 +1,27 @@
+{
+    "name": "itwmw/engine-validate-middleware",
+    "description": "微擎表单验证器路由中间件",
+    "authors": [
+        {
+            "name": "虞灪",
+            "email": "995645888@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Itwmw\\Validate\\Middleware\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^7.2.5|^8.0",
+        "w7/engine-validate": "^3.4.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpunit/phpunit": "^9.5"
+    }
+}
