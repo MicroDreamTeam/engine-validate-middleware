@@ -10,6 +10,10 @@ class ValidateMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+        if (!strpos($request->route()->getActionName(), '@')) {
+            return $next($request);
+        }
+
         list($controller, $scene) = explode('@', $request->route()->getActionName());
 
         $validator = ValidateMiddlewareConfig::instance()->getValidateFactory()->getValidate($controller, $scene);
