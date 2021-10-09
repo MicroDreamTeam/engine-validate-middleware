@@ -9,10 +9,11 @@ class ValidateFactory implements ValidateFactoryInterface
 {
     public function getValidate(string $controller, string $scene = '')
     {
-        $haveLink = false;
-        $validate = '';
+        $haveLink                 = false;
+        $validate                 = '';
+        $validateMiddlewareConfig = ValidateMiddlewareConfig::instance();
 
-        $validateLink = ValidateMiddlewareConfig::instance()->getValidateLink($controller);
+        $validateLink = $validateMiddlewareConfig->getValidateLink($controller);
         if (!empty($validateLink)) {
             # Specified validator for the specified controller method
             if (isset($validateLink[$scene]) || isset($validateLink['!__other__'])) {
@@ -40,7 +41,7 @@ class ValidateFactory implements ValidateFactoryInterface
             # Handles controllers with specified paths
             $controllerPath = '';
             $validatePath   = '';
-            foreach (ValidateMiddlewareConfig::instance()->getAutoValidatePath() as $_controllerPath => $_validatePath) {
+            foreach ($validateMiddlewareConfig->getAutoValidatePath() as $_controllerPath => $_validatePath) {
                 if (false !== strpos($controller, $_controllerPath)) {
                     $controllerPath = $_controllerPath;
                     $validatePath   = $_validatePath;
@@ -51,11 +52,17 @@ class ValidateFactory implements ValidateFactoryInterface
                 return false;
             }
 
-            $validate   = str_replace($controllerPath, '', $controller);
-            $_namespace = explode('\\', $validate);
-            $fileName   = str_replace('Controller', 'Validate', array_pop($_namespace));
+            $validate           = str_replace($controllerPath, '', $controller);
+            $_namespace         = explode('\\', $validate);
+            $regex              = $validateMiddlewareConfig->getControllerRegexFormat();
+            $validatorClassName = $validateMiddlewareConfig->getValidatorFormat();
+            if (preg_match($regex, array_pop($_namespace), $mc)) {
+                for ($i = 0; $i < count($mc); $i++) {
+                    $validatorClassName = str_replace('$' . $i, $mc[$i], $validatorClassName);
+                }
+            }
             $_namespace = implode('\\', $_namespace);
-            $validate   = $validatePath . $_namespace . (!empty($_namespace) ? '\\' : '') . $fileName;
+            $validate   = $validatePath . $_namespace . (!empty($_namespace) ? '\\' : '') . $validatorClassName;
         }
 
         if (class_exists($validate)) {

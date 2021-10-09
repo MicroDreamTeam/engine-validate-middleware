@@ -1,17 +1,8 @@
 <?php
 
-/**
- * WeEngine System
- *
- * (c) We7Team 2021 <https://www.w7.cc>
- *
- * This is not a free software
- * Using it under the license terms
- * visited https://www.w7.cc for more details
- */
-
 use Psr\Http\Message\ServerRequestInterface;
 use Illuminate\Http\Request;
+use think\Request as ThinkRequest;
 use Itwmw\Validation\Support\Collection\Collection;
 
 if (!function_exists('get_validate_data')) {
@@ -27,6 +18,8 @@ if (!function_exists('get_validate_data')) {
             $data = $request->getAttribute('__validate__data__');
         } elseif ($request instanceof Request) {
             $data = $request->offsetGet('__validate__data__');
+        } elseif ($request instanceof ThinkRequest) {
+            $data = $request->__validate__data__;
         } else {
             $data = [];
         }

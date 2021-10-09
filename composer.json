@@ -21,7 +21,6 @@
         "w7/engine-validate": "^4.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3",
         "phpunit/phpunit": "^9.5"
     },
     "minimum-stability": "dev",

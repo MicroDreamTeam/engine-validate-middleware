@@ -1,4 +1,5 @@
 <?php
+
 namespace Itwmw\Validate\Middleware;
 
 class ValidateMiddlewareConfig
@@ -22,6 +23,18 @@ class ValidateMiddlewareConfig
     protected $validateFactory;
 
     /**
+     * Controller name matching format
+     * @var string
+     */
+    protected $controllerRegexFormat = '/^(.*?)Controller$/';
+
+    /**
+     * Validator name format
+     * @var string
+     */
+    protected $validatorFormat = '$1Validate';
+
+    /**
      * Stored single instance objects
      * @var ValidateMiddlewareConfig
      */
@@ -39,6 +52,50 @@ class ValidateMiddlewareConfig
     public function __construct()
     {
         $this->validateFactory = new ValidateFactory();
+    }
+
+    /**
+     * Set the controller name matching format
+     *
+     * @param string $regex
+     * @return $this
+     */
+    public function setControllerRegexFormat(string $regex): ValidateMiddlewareConfig
+    {
+        $this->controllerRegexFormat = $regex;
+        return $this;
+    }
+
+    /**
+     * Set the validator name format,$1 for the first match
+     *
+     * @param string $format
+     * @return $this
+     */
+    public function setValidatorFormat(string $format): ValidateMiddlewareConfig
+    {
+        $this->validatorFormat = $format;
+        return $this;
+    }
+
+    /**
+     * Get controller name match format
+     *
+     * @return string
+     */
+    public function getControllerRegexFormat(): string
+    {
+        return $this->controllerRegexFormat;
+    }
+
+    /**
+     * Get validator name format
+     *
+     * @return string
+     */
+    public function getValidatorFormat(): string
+    {
+        return $this->validatorFormat;
     }
 
     /**
