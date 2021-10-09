@@ -12,16 +12,16 @@
 
 use Psr\Http\Message\ServerRequestInterface;
 use Illuminate\Http\Request;
-use W7\Validate\Support\Storage\ValidateCollection;
+use Itwmw\Validation\Support\Collection\Collection;
 
 if (!function_exists('get_validate_data')) {
     /**
      * Get the result after verification
      *
      * @param ServerRequestInterface|Request $request Request Example
-     * @return ValidateCollection
+     * @return Collection
      */
-    function get_validate_data($request = null): ValidateCollection
+    function get_validate_data($request = null): Collection
     {
         if ($request instanceof ServerRequestInterface) {
             $data = $request->getAttribute('__validate__data__');
